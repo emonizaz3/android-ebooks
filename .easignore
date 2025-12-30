@@ -4,8 +4,6 @@ dist/
 web-build/
 android/
 ios/
-assets/
-db/
 tmp/
 *.db
 *.sqlite
