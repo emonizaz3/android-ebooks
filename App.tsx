@@ -282,7 +282,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar hidden={true} />
       <View style={styles.appHeader}>
         <Text style={styles.logo}>BanglaEbook</Text>
         <View style={styles.searchBar}>

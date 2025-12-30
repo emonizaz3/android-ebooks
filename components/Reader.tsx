@@ -10,7 +10,8 @@ import {
     ActivityIndicator,
     Modal,
     FlatList,
-    BackHandler
+    BackHandler,
+    StatusBar
 } from 'react-native';
 import { ChevronLeft, Menu, Settings, Bookmark, ChevronRight } from 'lucide-react-native';
 import { Book, Chapter } from '../db/database';
@@ -107,6 +108,7 @@ export const Reader: React.FC<ReaderProps> = ({
 
     return (
         <SafeAreaView style={[styles.container, { backgroundColor: currentTheme.bg }]}>
+            <StatusBar hidden={true} />
             {/* Header */}
             <View style={[styles.header, { backgroundColor: currentTheme.header, borderBottomColor: currentTheme.border }]}>
                 <View style={styles.headerLeft}>

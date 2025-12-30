@@ -20,7 +20,10 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#002D62"
       },
-      "edgeToEdgeEnabled": false,
+      "edgeToEdgeEnabled": true,
+      "androidStatusBar": {
+        "hidden": true
+      },
       "predictiveBackGestureEnabled": false,
       "package": "com.banglaebookbyizaz.andriod"
     },
