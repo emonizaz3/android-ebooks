@@ -124,7 +124,7 @@ export const Reader: React.FC<ReaderProps> = ({
                 ref={scrollRef}
                 contentContainerStyle={styles.scrollContent}
             >
-                <article>
+                <View>
                     <Text style={[
                         styles.chapterTitle,
                         { color: currentTheme.text, fontSize: 32 }
@@ -142,7 +142,7 @@ export const Reader: React.FC<ReaderProps> = ({
                     ]}>
                         {chapter.body_text}
                     </Text>
-                </article>
+                </View>
 
                 {/* Navigation */}
                 <View style={[styles.navContainer, { borderTopColor: currentTheme.border }]}>

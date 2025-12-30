@@ -168,15 +168,17 @@ export default function App() {
 
   // Handle Book Select
   const handleBookSelect = async (book: Book) => {
+    console.log("Selecting book:", book.title, "ID:", book.book_id);
     setSelectedBook(book);
     setLoadingChapters(true);
     try {
       const bookChapters = await getChaptersByBookId(book.book_id);
+      console.log("Fetched chapters count:", bookChapters.length);
       setChapters(bookChapters);
       const savedChapter = bookmarks[book.book_id];
       setCurrentChapterIdx(savedChapter !== undefined ? savedChapter : 0);
     } catch (err) {
-      console.error(err);
+      console.error("Failed to fetch chapters:", err);
     } finally {
       setLoadingChapters(false);
     }
