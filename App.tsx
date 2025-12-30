@@ -14,7 +14,7 @@ import {
   Modal
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Search, Home, Book as BookIcon, Heart, Bookmark as BookmarkIcon, ChevronLeft, Settings as SettingsIcon, RefreshCcw, FileInput } from 'lucide-react-native';
+import { Search, Home, Book as BookIcon, Heart, Bookmark as BookmarkIcon, ChevronLeft, Settings as SettingsIcon, RefreshCcw, FileInput, X } from 'lucide-react-native';
 import { useFonts, HindSiliguri_400Regular, HindSiliguri_700Bold } from '@expo-google-fonts/hind-siliguri';
 import { NotoSerifBengali_400Regular, NotoSerifBengali_700Bold } from '@expo-google-fonts/noto-serif-bengali';
 
@@ -293,6 +293,11 @@ export default function App() {
             value={searchTerm}
             onChangeText={setSearchTerm}
           />
+          {searchTerm.length > 0 && (
+            <TouchableOpacity onPress={() => setSearchTerm('')} style={{ padding: 4 }}>
+              <X size={16} color="#9ca3af" />
+            </TouchableOpacity>
+          )}
         </View>
         <TouchableOpacity onPress={() => setIsGlobalSettingsOpen(true)} style={styles.iconButton}>
           <SettingsIcon size={24} color="#000" />
@@ -312,11 +317,14 @@ export default function App() {
                   onPress={() => { setSelectedAuthor(a.author); setCurrentView('author_detail'); }}
                   style={styles.authorItem}
                 >
-                  <View style={styles.authorAvatar}>
+                  <View style={[styles.authorAvatar, { backgroundColor: '#3b82f6', justifyContent: 'center', alignItems: 'center' }]}>
                     <Image
-                      source={{ uri: `https://ui-avatars.com/api/?name=${encodeURIComponent(a.author)}&background=random&color=fff&size=200` }}
-                      style={styles.avatarImage}
+                      source={{ uri: `https://ui-avatars.com/api/?name=${encodeURIComponent(a.author.split(' ').slice(0, 2).join(' '))}&background=random&color=fff&size=200&bold=true&uppercase=false` }}
+                      style={[styles.avatarImage, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}
                     />
+                    <Text style={{ color: '#fff', fontSize: 24, fontWeight: '700' }}>
+                      {a.author.trim().charAt(0)}
+                    </Text>
                   </View>
                   <Text style={styles.authorName} numberOfLines={1}>{a.author}</Text>
                   <Text style={styles.authorSubText}>{a.book_count} Books</Text>
@@ -376,17 +384,20 @@ export default function App() {
         {/* Book/Author Grid */}
         <View style={styles.bookGrid}>
           {currentView === 'all-books' && librarySubView === 'authors' ? (
-            authors.filter(a => a.author !== 'Unknown').map((a, i) => (
+            authors.filter(a => a.author !== 'Unknown' && (searchTerm === '' || a.author.toLowerCase().includes(searchTerm.toLowerCase()))).map((a, i) => (
               <TouchableOpacity
                 key={i}
                 onPress={() => { setSelectedAuthor(a.author); setCurrentView('author_detail'); }}
                 style={styles.authorGridItem}
               >
-                <View style={styles.authorGridAvatar}>
+                <View style={[styles.authorGridAvatar, { backgroundColor: '#3b82f6', justifyContent: 'center', alignItems: 'center' }]}>
                   <Image
-                    source={{ uri: `https://ui-avatars.com/api/?name=${encodeURIComponent(a.author)}&background=random&color=fff&size=200` }}
-                    style={styles.avatarImage}
+                    source={{ uri: `https://ui-avatars.com/api/?name=${encodeURIComponent(a.author.split(' ').slice(0, 2).join(' '))}&background=random&color=fff&size=200&bold=true&uppercase=false` }}
+                    style={[styles.avatarImage, { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }]}
                   />
+                  <Text style={{ color: '#fff', fontSize: 28, fontWeight: '700' }}>
+                    {a.author.trim().charAt(0)}
+                  </Text>
                 </View>
                 <Text style={styles.authorGridName} numberOfLines={2}>{a.author}</Text>
                 <Text style={styles.authorGridSubText}>{a.book_count} Books</Text>
@@ -509,8 +520,12 @@ export default function App() {
               </View>
               <View style={styles.infoRow}>
                 <Text style={styles.infoKey}>Version</Text>
-                <Text style={styles.infoValue}>1.1.0</Text>
+                <Text style={styles.infoValue}>1.2.0</Text>
               </View>
+            </View>
+
+            <View style={{ alignItems: 'center', marginTop: 16 }}>
+              <Text style={{ fontSize: 12, color: '#9ca3af', fontWeight: '500' }}>Created by emonizaz</Text>
             </View>
 
             <TouchableOpacity
