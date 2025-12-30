@@ -52,6 +52,9 @@ export async function importDatabase() {
     const dbDir = `${documentDirectory}SQLite/`;
     const dbPath = `${dbDir}${DB_NAME}`;
 
+    // Close existing connection before swapping files
+    await closeDatabaseConnection();
+
     await makeDirectoryAsync(dbDir, { intermediates: true });
     await copyAsync({
         from: selectedFile.uri,
@@ -69,8 +72,19 @@ export async function initDatabase() {
     }
 }
 
+let _dbInstance: SQLite.SQLiteDatabase | null = null;
+
+export async function closeDatabaseConnection() {
+    if (_dbInstance) {
+        await _dbInstance.closeAsync();
+        _dbInstance = null;
+    }
+}
+
 async function getDb() {
-    return await SQLite.openDatabaseAsync(DB_NAME);
+    if (_dbInstance) return _dbInstance;
+    _dbInstance = await SQLite.openDatabaseAsync(DB_NAME);
+    return _dbInstance;
 }
 
 export async function getAllBooks(params: {
