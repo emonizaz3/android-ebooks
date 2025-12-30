@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "android",
-    "slug": "android",
+    "name": "BanglaEbook",
+    "slug": "BanglaEbook",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#002D62"
     },
     "ios": {
       "supportsTablet": true
@@ -18,9 +18,9 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#002D62"
       },
-      "edgeToEdgeEnabled": true,
+      "edgeToEdgeEnabled": false,
       "predictiveBackGestureEnabled": false,
       "package": "com.banglaebookbyizaz.andriod"
     },

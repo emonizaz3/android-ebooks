@@ -9,7 +9,8 @@ import {
     Dimensions,
     ActivityIndicator,
     Modal,
-    FlatList
+    FlatList,
+    BackHandler
 } from 'react-native';
 import { ChevronLeft, Menu, Settings, Bookmark, ChevronRight } from 'lucide-react-native';
 import { Book, Chapter } from '../db/database';
@@ -55,6 +56,20 @@ export const Reader: React.FC<ReaderProps> = ({
     useEffect(() => {
         scrollRef.current?.scrollTo({ y: 0, animated: false });
     }, [currentChapterIndex]);
+
+    useEffect(() => {
+        const backAction = () => {
+            onClose();
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction
+        );
+
+        return () => backHandler.remove();
+    }, [onClose]);
 
     const chapter = chapters[currentChapterIndex];
     const hasPrev = currentChapterIndex > 0;
